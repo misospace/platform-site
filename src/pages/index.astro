@@ -1,0 +1,63 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="misospace — dispatch + courier" description="Dispatch queues AI-agent work. Courier runs it. GitHub stays the source of truth." active="/">
+  <section class="hero">
+    <span class="kicker">dispatch + courier</span>
+    <h1>Queue the work.<br/>Run the agents.</h1>
+    <p class="sub">
+      Dispatch turns GitHub issues and PR follow-ups into claimable queues.
+      Courier turns a claimed task into a long-lived coding coordinator in a
+      Kubernetes pod. Together they close the loop from issue to published
+      change — on your own hardware.
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="/courier">Meet Courier →</a>
+      <a class="btn" href="/dispatch">Meet Dispatch</a>
+      <a class="btn" href="https://github.com/misospace">GitHub</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>One loop, two tools</h2>
+    <div class="pipeline">
+      <div class="card">
+        <h3>Dispatch <span class="lang">TypeScript</span></h3>
+        <p>Harness-agnostic Kanban for AI agents. Grooms issues into lanes, hands out work one item at a time with generation tokens, tracks every run with an audit trail. GitHub stays the source of truth.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card">
+        <h3>Courier <span class="lang">Go</span></h3>
+        <p>A Kubernetes operator that claims work from any source, launches a resumable coding coordinator per task, validates locally, and publishes a change for human review.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="card">
+        <h3>The PR <span class="lang">output</span></h3>
+        <p>A real pull request on a real branch — with verification evidence attached, ready for a human to merge or send back with feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>The handshake</h2>
+    <p class="lede">
+      Neither tool owns the other's job. Dispatch never runs code; Courier never
+      owns the queue. They meet at a small, deliberate contract.
+    </p>
+    <div class="cards three">
+      <div class="card"><h3>1 · Hand out</h3><p>Courier polls <code>next-task</code> with a worker token bound to its agent identity. Dispatch hands out one item per run, with a generation token.</p></div>
+      <div class="card"><h3>2 · Ack after durability</h3><p>Courier creates a <code>CoderRun</code> — and only after that run exists does it acknowledge the handout. Unacked items are re-handed; nothing executes twice.</p></div>
+      <div class="card"><h3>3 · Report with phases</h3><p>Courier reports outcomes — <code>FIXED</code>, <code>WAITING_EXTERNAL</code>, <code>PARKED</code> — generation-fenced, so burned attempts don't strand work as human-blocked.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Built different, on purpose</h2>
+    <div class="cards two">
+      <div class="card"><h3>No wall-clock deadlines</h3><p>Consumer hardware is slow. An 18-hour run that is making progress is fine — Courier bounds <em>stuck</em>, not <em>duration</em>.</p></div>
+      <div class="card"><h3>Local-capable, not local-constrained</h3><p>Lanes run whatever a <code>LaneProfile</code> names: Anthropic, OpenAI, MiniMax, a local vLLM, any mix. Local models iterate their way to a published PR.</p></div>
+      <div class="card"><h3>Harness-agnostic</h3><p>OpenCode today, anything tomorrow. Sources too: dispatch, labels, cron, CLI, web UI — adapters, none a dependency.</p></div>
+      <div class="card"><h3>Dogfoods itself</h3><p>Courier develops Courier. The repos you're reading run on the system they build.</p></div>
+    </div>
+  </section>
+</Base>
