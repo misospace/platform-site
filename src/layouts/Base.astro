@@ -1,0 +1,46 @@
+---
+const { title = "misospace", description = "Open infrastructure for autonomous software work.", active = "" } = Astro.props;
+const nav = [
+  { href: "/", label: "misospace" },
+  { href: "/courier", label: "Courier" },
+  { href: "/dispatch", label: "Dispatch" },
+  { href: "/pr-reviewer", label: "PR Reviewer" },
+];
+import "../styles/global.css";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="wordmark" href="/">misospace<span class="dot">.</span>org</a>
+      <nav>
+        {nav.map((n) => (
+          <a href={n.href} class={n.href === active ? "active" : ""}>{n.label}</a>
+        ))}
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="family">
+        <a href="/courier">courier</a>
+        <a href="/dispatch">dispatch</a>
+        <a href="/pr-reviewer">pr-reviewer-action</a>
+        <a href="https://github.com/misospace/alert-triage">alert-triage</a>
+        <a href="https://github.com/misospace/musebridge">musebridge</a>
+        <a href="https://github.com/misospace/windowstead">windowstead</a>
+        <a href="https://github.com/misospace/miso-gallery">miso-gallery</a>
+      </div>
+      <div>© 2026 misospace · open infrastructure for autonomous software work</div>
+    </footer>
+  </body>
+</html>
